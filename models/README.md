@@ -26,7 +26,7 @@ data/
 └── names (3).json
 ```
 
-Both locations are resolved through settings, so a deployment that wants a different
+Both locations are resolved through settings, so a local setup with a different
 layout sets two environment variables and nothing else changes:
 
 ```env
@@ -34,14 +34,13 @@ MODELS_DIR=D:\Crop_Diseases_Prediction\models      # default: <repo_root>/models
 DATA_DIR=D:\Crop_Diseases_Prediction\data          # default: <repo_root>/data
 ```
 
-## Deployed hosts (Render, Docker, a fresh clone)
+## Checkpoint availability
 
-Checkpoint management — training, fine-tuning, and remote checkpoint download — is
+Checkpoint management, training, fine-tuning, and remote checkpoint download are
 **out of scope for this release**. The app consumes only the two checkpoints already
 present under `models/`; nothing is fetched over the network at boot.
 
-Place both files into `MODELS_DIR` as part of provisioning the host: bake them into
-the image, mount a volume, or copy them in before the first boot.
+Keep both files in `MODELS_DIR` before starting the backend.
 
 `backend/app/services/model_registry.py` loads whatever is present. A missing or
 unreadable checkpoint is logged, that model is marked unavailable, and startup

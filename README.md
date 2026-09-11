@@ -9,12 +9,10 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
-[![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://render.com/)
 
 **An end-to-end, AI-powered agricultural diagnosis platform.** Photograph any crop leaf, receive an instant disease diagnosis powered by a two-model deep learning cascade (Vision Transformer + EfficientNet-B3), and access practical, expert-backed treatment guidelines across 91 crop disease classes.
 
-[Features](#-key-features) • [Architecture](#-system-architecture) • [Live Deployment](#-deployment-guide) • [Local Setup](#-local-development-setup) • [API Docs](#-api-reference) • [Credits](#-author--credits)
+[Screenshots](#-screenshots) • [Features](#-key-features) • [Architecture](#-system-architecture) • [Local Setup](#-local-development-setup) • [API Docs](#-api-reference) • [Credits](#-author--credits)
 
 </div>
 
@@ -23,11 +21,9 @@
 ## 📋 Table of Contents
 
 - [🌿 Overview](#-overview)
+- [📸 Screenshots](#-screenshots)
 - [✨ Key Features](#-key-features)
 - [🏗️ System Architecture](#-system-architecture)
-- [🚀 Deployment Guide](#-deployment-guide)
-  - [Deploying Frontend on Vercel](#1-deploy-frontend-on-vercel)
-  - [Deploying Backend on Render](#2-deploy-backend-on-render)
 - [💻 Local Development Setup](#-local-development-setup)
   - [Prerequisites](#prerequisites)
   - [Backend Setup (FastAPI)](#step-1-backend-setup)
@@ -50,6 +46,19 @@ Crop diseases cause substantial losses to agricultural yield and food security e
 
 ---
 
+## 📸 Screenshots
+
+The complete local website flow is shown below: the landing page, diagnosis workspace, and scan history view.
+
+<p align="center">
+  <img src="frontend/public/screenshots/home.png" alt="Crop Disease Detection home page" width="23%" />
+  <img src="frontend/public/screenshots/diagnosis.png" alt="Crop Disease Detection diagnosis page" width="23%" />
+  <img src="frontend/public/screenshots/history.png" alt="Crop Disease Detection history page" width="23%" />
+  <img src="frontend/public/screenshots/not-found.png" alt="Crop Disease Detection not found page" width="23%" />
+</p>
+
+---
+
 ## ✨ Key Features
 
 - **🌾 Multi-Crop Support**: Detects diseases across Apple, Blueberry, Cherry, Corn, Grape, Orange, Peach, Bell Pepper, Potato, Raspberry, Soybean, Squash, Strawberry, Tomato, Cotton, and more.
@@ -69,81 +78,27 @@ Crop diseases cause substantial losses to agricultural yield and food security e
 ```mermaid
 flowchart TD
     User([User / Browser])
-    Vercel[Vercel: React 18 + Vite SPA]
-    Render[Render: FastAPI Backend Service]
+    Web[React 18 + Vite SPA]
+    API[FastAPI Backend Service]
     ViT[Primary: ViT-B/16 Model]
     EffNet[Fallback: EfficientNet-B3 Model]
     DB[(SQLite: history.db)]
     Uploads[(Local / Disk Uploads)]
     RecStore[Recommendations Knowledge Base]
 
-    User -->|1. Uploads Leaf Image| Vercel
-    Vercel -->|2. POST /api/predict| Render
-    Render -->|3. First Pass| ViT
+    User -->|1. Uploads Leaf Image| Web
+    Web -->|2. POST /api/predict| API
+    API -->|3. First Pass| ViT
     ViT -->|Confidence >= 70%?| Decision{Confident?}
     Decision -->|Yes| Output[Selected Diagnosis]
     Decision -->|No < 70%| EffNet
     EffNet --> Output
     Output -->|Lookup Guidance| RecStore
-    Render -->|Save Scan Record| DB
-    Render -->|Save Image| Uploads
-    Render -->|4. Return Enriched JSON| Vercel
-    Vercel -->|5. Display Diagnosis & Treatment| User
+     API -->|Save Scan Record| DB
+     API -->|Save Image| Uploads
+     API -->|4. Return Enriched JSON| Web
+     Web -->|5. Display Diagnosis & Treatment| User
 ```
-
----
-
-## 🚀 Deployment Guide
-
-This project is architected for seamless separation of concerns:
-- **Frontend** is deployed to **Vercel** as a high-performance static React Single Page Application.
-- **Backend** is deployed to **Render** as a Python FastAPI web service.
-
----
-
-### 1. Deploy Frontend on Vercel
-
-1. Push your repository to GitHub: `https://github.com/Dibendu094/CropDiseasesDetection.git`
-2. Log in to [Vercel](https://vercel.com/) and click **Add New Project**.
-3. Import the `CropDiseasesDetection` repository.
-4. In the project configuration:
-   - **Framework Preset**: `Vite`
-   - **Root Directory**: Click *Edit* and select **`frontend`**.
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-   - **Install Command**: `npm install`
-5. Under **Environment Variables**, add:
-   - `VITE_API_BASE_URL`: The URL of your deployed Render backend (e.g. `https://crop-disease-backend.onrender.com`).
-6. Click **Deploy**. Vercel will automatically build and publish your frontend with SPA routing enabled via `frontend/vercel.json`.
-
----
-
-### 2. Deploy Backend on Render
-
-1. Log in to [Render](https://render.com/) and click **New +** → **Web Service**.
-2. Connect your GitHub repository: `Dibendu094/CropDiseasesDetection`.
-3. Configure the service:
-   - **Name**: `crop-disease-backend`
-   - **Region**: Select your nearest region (e.g. Frankfurt, Oregon, Singapore).
-   - **Root Directory**: `backend`
-   - **Runtime**: `Python 3`
-   - **Build Command**:
-     ```bash
-     pip install -r requirements.txt
-     ```
-   - **Start Command**:
-     ```bash
-     uvicorn app.main:app --host 0.0.0.0 --port $PORT
-     ```
-4. Under **Environment Variables**, configure:
-   - `PYTHON_VERSION`: `3.11.9`
-   - `CORS_ALLOW_ORIGINS`: `*` (or your Vercel URL: `https://your-app.vercel.app`)
-   - `MODELS_DIR`: `../models`
-   - `DATA_DIR`: `../data`
-5. **Model Checkpoints on Render**:
-   - Because PyTorch checkpoints total ~1.1 GB, place or download `best_epoch_4_acc_98.70.pth` and `vit_b16_epoch_02 (2).pth` into the `models/` directory during build or attach a Render Persistent Disk.
-   - *Note*: If deployed without checkpoints, the backend automatically enters degraded mode (`GET /api/health` reports status `degraded`), allowing metadata and history endpoints to serve normally.
-6. Click **Create Web Service**. Render will install dependencies and launch Uvicorn.
 
 ---
 
