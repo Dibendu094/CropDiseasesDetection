@@ -47,6 +47,10 @@ wheels/
 .installed.cfg
 *.egg
 
+# Frontend source utilities are intentionally kept under a directory named "lib".
+!frontend/src/lib/
+!frontend/src/lib/**
+
 # Testing & Cache
 .pytest_cache/
 .coverage

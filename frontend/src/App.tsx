@@ -38,6 +38,8 @@ function pageElement(route: NavRoute): JSX.Element {
     case "/history":
       return <HistoryPage />;
   }
+
+  throw new Error(`Unsupported route: ${route.path}`);
 }
 
 export function App(): JSX.Element {
