@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: crop-disease-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    rootDir: backend
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: CORS_ALLOW_ORIGINS
+        value: "*"
+      - key: MODELS_DIR
+        value: ../models
+      - key: DATA_DIR
+        value: ../data

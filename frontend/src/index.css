@@ -1,0 +1,203 @@
+/* Self-hosted variable fonts — no third-party font request (Req 11.3). */
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/plus-jakarta-sans";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* White canvas on every page (Req 11.1), Inter body text at ink.700 (10.09:1 on white, Req 12.7). */
+  body {
+    @apply bg-canvas font-sans text-body text-ink-700 antialiased;
+    /* No unbreakable strings: the recommendation data carries 200+ character sentences and
+       unbroken chemical names, the realistic cause of horizontal scroll at 360 px (Req 12.1). */
+    overflow-wrap: break-word;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading text-ink-900;
+  }
+
+  /* Numeric contexts: confidence percentages, timestamps, byte counts. */
+  time,
+  output,
+  [role="progressbar"],
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Media never overflows its column at the 360 px floor (Req 12.1). */
+  img,
+  svg,
+  video,
+  canvas {
+    @apply block max-w-full;
+  }
+}
+
+/* Project utilities are declared outside `@layer utilities` on purpose: they are referenced from
+   component markup written in later tasks, and Tailwind would tree-shake a layered rule that no
+   scanned file mentions yet. Declared after `@tailwind utilities` they keep the intended order. */
+
+/* Enhanced focus ring with green glow (Req 12.4). Nothing sets `outline: none`. */
+.focus-ring:focus-visible {
+  outline: 2px solid #175D34; /* leaf.700 */
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 4px rgb(46 143 82 / 0.18);
+}
+
+/* Long recommendation strings and unbroken chemical names (Req 12.1). */
+.wrap-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Confidence percentages, timestamps, and other aligned numerals (Req 11.3). */
+.numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hover motion transform, neutralised by the reduced-motion block below (Req 11.4, 11.6). */
+.hover-lift {
+  transition-property: transform, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px -4px rgb(20 40 29 / 0.16);
+}
+
+/* ── Glass morphism ─────────────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+.glass-dark {
+  background: rgba(10, 31, 18, 0.75);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(46, 143, 82, 0.22);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(227, 234, 229, 0.85);
+}
+
+/* ── Gradient text ──────────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #1E7340 0%, #2E8F52 55%, #48A96A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-hero {
+  background: linear-gradient(135deg, #72C48E 0%, #48A96A 45%, #2E8F52 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Hero dark background ───────────────────────────────────────── */
+.hero-bg {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgb(46 143 82 / 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgb(72 169 106 / 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 110%, rgb(30 115 64 / 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 90%, rgb(18 74 41 / 0.25) 0%, transparent 40%),
+    linear-gradient(160deg, #0C3319 0%, #0A1F12 55%, #060E09 100%);
+}
+
+/* ── Semi-transparent dark surfaces (for navbar elements) ───────── */
+.bg-white\/8  { background-color: rgb(255 255 255 / 0.08); }
+.bg-white\/12 { background-color: rgb(255 255 255 / 0.12); }
+.border-white\/8  { border-color: rgb(255 255 255 / 0.08); }
+.border-white\/10 { border-color: rgb(255 255 255 / 0.10); }
+.border-white\/15 { border-color: rgb(255 255 255 / 0.15); }
+
+/* ── Shimmer skeleton loading ───────────────────────────────────── */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgb(239 243 240 / 0) 0%,
+    rgb(227 234 229 / 1) 50%,
+    rgb(239 243 240 / 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s linear infinite;
+}
+
+.shimmer-dark {
+  background: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 0) 0%,
+    rgb(255 255 255 / 0.07) 50%,
+    rgb(255 255 255 / 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s linear infinite;
+}
+
+/* ── Premium card surface ───────────────────────────────────────── */
+.card-premium {
+  background: linear-gradient(145deg, #FFFFFF 0%, #F0FAF4 100%);
+  border: 1px solid rgba(210, 239, 220, 0.8);
+}
+
+/* ── Primary button gradient + glow ────────────────────────────── */
+.btn-primary-gradient {
+  background: linear-gradient(135deg, #175D34 0%, #1E7340 40%, #2E8F52 100%);
+  box-shadow: 0 4px 16px rgb(30 115 64 / 0.38), 0 1px 3px rgb(30 115 64 / 0.2);
+  transition: box-shadow 200ms, transform 150ms, filter 200ms;
+}
+
+.btn-primary-gradient:hover:not(:disabled) {
+  box-shadow: 0 8px 24px rgb(30 115 64 / 0.48), 0 2px 6px rgb(30 115 64 / 0.25);
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.btn-primary-gradient:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgb(30 115 64 / 0.30);
+}
+
+/* ── One global reduced-motion block (Req 11.6) ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hover-lift:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .btn-primary-gradient:hover:not(:disabled) {
+    transform: none !important;
+  }
+}

@@ -1,0 +1,75 @@
+# Environment variables & secrets
+.env
+.env.*
+*.env
+backend/.env
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Specs & Agent artifacts
+.kiro/
+.gemini/
+
+# Python virtual environments & bytecode
+.venv/
+venv/
+ENV/
+env/
+backend/.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Cache
+.pytest_cache/
+.coverage
+htmlcov/
+backend/.hypothesis/
+
+# Node & Frontend dependencies and builds
+node_modules/
+frontend/node_modules/
+frontend/dist/
+.npm
+.eslintcache
+
+# Backend runtime data & uploads
+backend/history.db
+backend/history.db-wal
+backend/history.db-shm
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/testimages/
+
+# Model weights (large binary files >100MB; see models/README.md)
+models/*.pth
+models/*.pt
+models/*.bin
+models/*.onnx

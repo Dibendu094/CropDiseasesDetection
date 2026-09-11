@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-labelledby="favicon-title">
+  <title id="favicon-title">Trifoliate leaf</title>
+  <!-- Trifoliate leaf: three rounded lobes on a short stem, transparent background. -->
+  <g fill="#2A7247">
+    <path d="M16 2.6c-4.6 4.4-5.6 9.6-2.1 13.4h4.2c3.5-3.8 2.5-9-2.1-13.4Z" />
+    <path d="M4.4 8.6c-1 6.2 1.9 10.6 7.1 11.1l2.6-3.3C12.1 11.3 8.8 8.6 4.4 8.6Z" />
+    <path d="M27.6 8.6c1 6.2-1.9 10.6-7.1 11.1l-2.6-3.3c2-5.1 5.3-7.8 9.7-7.8Z" />
+  </g>
+  <path d="M16 16.4v12.2" fill="none" stroke="#2A7247" stroke-width="2.2" stroke-linecap="round" />
+</svg>
