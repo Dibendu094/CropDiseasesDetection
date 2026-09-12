@@ -48,13 +48,13 @@ Crop diseases cause substantial losses to agricultural yield and food security e
 
 ## 📸 Screenshots
 
-The complete local website flow is shown below: the landing page, diagnosis workspace, and scan history view.
+The current local website flow is shown below: the home page, image upload workspace, completed diagnosis with treatment guidance, and scan history with crop photos.
 
 <p align="center">
   <img src="frontend/public/screenshots/home.png" alt="Crop Disease Detection home page" width="23%" />
-  <img src="frontend/public/screenshots/diagnosis.png" alt="Crop Disease Detection diagnosis page" width="23%" />
-  <img src="frontend/public/screenshots/history.png" alt="Crop Disease Detection history page" width="23%" />
-  <img src="frontend/public/screenshots/not-found.png" alt="Crop Disease Detection not found page" width="23%" />
+  <img src="frontend/public/screenshots/diagnosis-upload.png" alt="Diagnosis page with a crop image uploaded" width="23%" />
+  <img src="frontend/public/screenshots/diagnosis-result-treatment.png" alt="Diagnosis result and treatment guidance" width="23%" />
+  <img src="frontend/public/screenshots/history.png" alt="History page with saved crop images" width="23%" />
 </p>
 
 ---
@@ -174,6 +174,7 @@ Both frontend and backend are covered by comprehensive unit, integration, and pr
 cd backend
 python -m pytest tests
 ```
+
 - **82 automated tests passing** (configuration validation, database persistence, batch history deletion, error envelopes, and recommendation resolution).
 
 ### Frontend Tests (Vitest & Testing Library)
@@ -193,22 +194,23 @@ npm run lint
 # Build production bundle
 npm run build
 ```
+
 - **53 automated tests passing** (WCAG contrast checks, layout verification, accessibility traps, confidence meters, and diagnosis reports).
 
 ---
 
 ## 📡 API Reference
 
-| Method | Path | Description |
-|---|---|---|
-| `GET` | `/api/health` | Healthcheck & loaded model status (`healthy` / `degraded`) |
-| `GET` | `/api/meta/classes` | Retrieve supported crops, diseases, and total class count |
-| `POST` | `/api/predict` | Upload image (`multipart/form-data`) with optional crop filter |
-| `GET` | `/api/history` | Paginated list of recent scans (newest first) |
-| `GET` | `/api/history/{id}` | Detailed scan record with candidates & treatments |
-| `GET` | `/api/history/{id}/image`| Raw leaf image stream for a scan |
-| `DELETE` | `/api/history/{id}` | Delete a single scan and its image file |
-| `DELETE` | `/api/history` | **Delete all history** scans and prune uploaded images |
+| Method   | Path                      | Description                                                    |
+| -------- | ------------------------- | -------------------------------------------------------------- |
+| `GET`    | `/api/health`             | Healthcheck & loaded model status (`healthy` / `degraded`)     |
+| `GET`    | `/api/meta/classes`       | Retrieve supported crops, diseases, and total class count      |
+| `POST`   | `/api/predict`            | Upload image (`multipart/form-data`) with optional crop filter |
+| `GET`    | `/api/history`            | Paginated list of recent scans (newest first)                  |
+| `GET`    | `/api/history/{id}`       | Detailed scan record with candidates & treatments              |
+| `GET`    | `/api/history/{id}/image` | Raw leaf image stream for a scan                               |
+| `DELETE` | `/api/history/{id}`       | Delete a single scan and its image file                        |
+| `DELETE` | `/api/history`            | **Delete all history** scans and prune uploaded images         |
 
 ---
 
@@ -216,10 +218,10 @@ npm run build
 
 The application uses two deep learning architectures trained on plant pathology datasets:
 
-| Checkpoint File | Architecture | Input Size | Classes | Role |
-|---|---|---|---|---|
-| `vit_b16_epoch_02 (2).pth` | ViT-B/16 (timm) | 384×384 | 91 | Primary classifier |
-| `best_epoch_4_acc_98.70.pth` | EfficientNet-B3 (timm) | 300×300 | 91 | Confidence fallback |
+| Checkpoint File              | Architecture           | Input Size | Classes | Role                |
+| ---------------------------- | ---------------------- | ---------- | ------- | ------------------- |
+| `vit_b16_epoch_02 (2).pth`   | ViT-B/16 (timm)        | 384×384    | 91      | Primary classifier  |
+| `best_epoch_4_acc_98.70.pth` | EfficientNet-B3 (timm) | 300×300    | 91      | Confidence fallback |
 
 Checkpoints are placed in the `models/` directory. See [models/README.md](models/README.md) for architecture details, dataset mappings, and download instructions.
 
@@ -230,6 +232,7 @@ Checkpoints are placed in the `models/` directory. See [models/README.md](models
 Developed and maintained exclusively by:
 
 **Dibendu094**
+
 - **GitHub**: [@Dibendu094](https://github.com/Dibendu094)
 - **Repository**: [Dibendu094/CropDiseasesDetection](https://github.com/Dibendu094/CropDiseasesDetection)
 

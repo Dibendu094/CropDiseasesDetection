@@ -12,9 +12,10 @@ Three things are worth knowing before editing:
   an explicit ``ALTER TABLE`` guarded by a ``PRAGMA table_info`` check -- there is
   no framework to do it for you, and that is the deliberate trade.
 * **One connection per request, never one shared connection.** Route handlers are
-  sync ``def``, so FastAPI runs them in its worker threadpool and each call gets
-  its own connection from :func:`get_connection`. Because no connection ever
-  crosses a thread boundary, ``check_same_thread`` stays at its safe default.
+    sync ``def``, so FastAPI runs them in its worker threadpool and each call gets
+    its own connection from :func:`get_connection`. FastAPI may run dependency
+    cleanup on a different worker thread, so each private connection allows that
+    handoff with ``check_same_thread=False``.
 * **Pragmas are per-connection except one.** ``journal_mode=WAL`` is persisted in
   the database header, so it survives; ``foreign_keys=ON`` is per-connection and
   has to be re-issued on every ``connect``. Both are set every time regardless,
@@ -184,7 +185,10 @@ def connect(
         in-memory database has no concurrent readers to protect.
     """
     target = _resolve_db_path(db_path, settings)
-    conn = sqlite3.connect(target)
+    # FastAPI can resume a generator dependency's cleanup on a different worker
+    # thread from the one that created the connection. Each connection remains
+    # request-local, so allowing that close handoff is safe here.
+    conn = sqlite3.connect(target, check_same_thread=False)
     conn.row_factory = sqlite3.Row
 
     # WAL: readers never block the writer, which matters because a history list
