@@ -127,7 +127,7 @@ export function UploadBox({
               2
             </span>
             <p className={`text-small font-heading font-semibold transition-colors duration-200 ${cropSelected ? "text-ink-700" : "text-ink-400"}`}>
-              Upload a photo of the affected leaf
+              Share a leaf photo
               {!cropSelected && (
                 <span className="ml-2 text-caption font-normal text-ink-400">
                   — select a crop first

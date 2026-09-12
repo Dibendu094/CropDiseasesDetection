@@ -50,7 +50,7 @@ export interface CameraCaptureProps {
   onCapture: (file: File) => void;
   /** Ignore activation, e.g. while a prediction is in flight. */
   disabled?: boolean;
-  /** Label of the control that opens the camera. Defaults to "Use camera". */
+  /** Label of the control that opens the camera. Defaults to "Take a picture". */
   openLabel?: string;
   /** Extra classes for the wrapper. */
   className?: string;
@@ -59,7 +59,7 @@ export interface CameraCaptureProps {
 export function CameraCapture({
   onCapture,
   disabled = false,
-  openLabel = "Use camera",
+  openLabel = "Take a picture",
   className,
 }: CameraCaptureProps): JSX.Element {
   const { status, stream, error, supported, start, stop } = useCamera();

@@ -1,7 +1,7 @@
 import { useCallback, useId, useRef, useState } from "react";
 import type { ChangeEvent, DragEvent, KeyboardEvent, ReactNode } from "react";
 
-import { ACCEPTED_FORMATS_LABEL, ACCEPTED_MIME_ATTR, MAX_UPLOAD_MB } from "../../lib/constants";
+import { ACCEPTED_MIME_ATTR, MAX_UPLOAD_MB } from "../../lib/constants";
 
 /**
  * The drop target and the file picker — two of the three intake paths (Req 3.2, 3.3).
@@ -70,8 +70,8 @@ const DISABLED_CLASSES = "cursor-not-allowed border-stone-200 bg-stone-100 opaci
 
 export function DropZone({
   onFileSelected,
-  label = "Drop a crop photo here, or choose a file",
-  hint = `${ACCEPTED_FORMATS_LABEL} up to ${MAX_UPLOAD_MB} MB`,
+  label = "Drop your leaf photo here",
+  hint = `or tap to browse · take a picture`,
   disabled = false,
   children,
   className,
@@ -215,6 +215,16 @@ export function DropZone({
         <p id={hintId} className="mt-1 text-small text-ink-400">
           {hint}
         </p>
+        <div className="mt-3 flex flex-wrap justify-center gap-1.5" aria-label="Accepted photo formats">
+          {["JPG", "JPEG", "PNG", `max ${MAX_UPLOAD_MB} MB`].map((format) => (
+            <span
+              key={format}
+              className="rounded-full border border-stone-200 bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-ink-400"
+            >
+              {format}
+            </span>
+          ))}
+        </div>
       </div>
 
       {children ? (
