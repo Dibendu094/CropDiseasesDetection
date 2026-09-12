@@ -12,7 +12,7 @@
 
 **An end-to-end, AI-powered agricultural diagnosis platform.** Photograph any crop leaf, receive an instant disease diagnosis powered by a two-model deep learning cascade (Vision Transformer + EfficientNet-B3), and access practical, expert-backed treatment guidelines across 91 crop disease classes.
 
-[Screenshots](#-screenshots) • [Features](#-key-features) • [Architecture](#-system-architecture) • [Local Setup](#-local-development-setup) • [API Docs](#-api-reference) • [Credits](#-author--credits)
+[Features](#-key-features) • [Architecture](#-system-architecture) • [Local Setup](#-local-development-setup) • [API Docs](#-api-reference) • [Credits](#-author--credits)
 
 </div>
 
@@ -21,7 +21,6 @@
 ## 📋 Table of Contents
 
 - [🌿 Overview](#-overview)
-- [📸 Screenshots](#-screenshots)
 - [✨ Key Features](#-key-features)
 - [🏗️ System Architecture](#-system-architecture)
 - [💻 Local Development Setup](#-local-development-setup)
@@ -43,19 +42,6 @@ Crop diseases cause substantial losses to agricultural yield and food security e
 2. **Actionable Treatment Plans**: Detailed recommendations covering **Chemical treatments**, **Organic / Biological remedies**, **Cultural practices**, and **Preventative management**.
 3. **Scan History Tracking**: Persistent history stored with SQLite and local image storage, including thumbnail previews and a one-click **"Delete All History"** management feature.
 4. **Accessible Design**: Built in strict accordance with WCAG 2.1 AA standards, high-contrast palette pairings, screen reader announcements, and keyboard navigation.
-
----
-
-## 📸 Screenshots
-
-The current local website flow is shown below: the home page, image upload workspace, completed diagnosis with treatment guidance, and scan history with crop photos.
-
-<p align="center">
-  <img src="frontend/public/screenshots/home.png" alt="Crop Disease Detection home page" width="23%" />
-  <img src="frontend/public/screenshots/diagnosis-upload.png" alt="Diagnosis page with a crop image uploaded" width="23%" />
-  <img src="frontend/public/screenshots/diagnosis-result-treatment.png" alt="Diagnosis result and treatment guidance" width="23%" />
-  <img src="frontend/public/screenshots/history.png" alt="History page with saved crop images" width="23%" />
-</p>
 
 ---
 
